@@ -1,0 +1,32 @@
+> install.packages("palmerpenguins")
+> library("palmerpenguins")
+
+> summary(penguins) #Show a summary of what data is in the palmer penguins dataset
+
+install.packages("tidyverse")
+library("tidyverse")
+
+> #Create a scatter plot that compares flipper length to body mass.
+> flipper_v_bodymass <- ggplot(data=penguins,aes(x=flipper_length_mm,y=body_mass_g))+geom_point(aes(color=species,shape=sex))
+> fvb_charttheme <- theme(plot.title = element_text(face="bold", size = (15)), axis.title = element_text(face="bold.italic", size=(10)), legend.title = element_text(face="bold", size=(11)), legend.text = element_text(face="italic", size = (10)))
+> print(flipper_v_bodymass + fvb_charttheme + labs(title = "Flipper Length Vs. Body Mass", x= "Flipper Length (mm)", y="Body Mass (g)"))
+
+> #Create a bar graph showing how many of each penguin species resides on each island.
+> island_chart <- ggplot(data=penguins, aes(x=island))+geom_bar(aes(fill=species), width = 0.25)
+> island_charttheme <- theme(plot.title = element_text(face = "bold", size = (15)), axis.title = element_text(face = "bold.italic", size = (10)), axis.text = element_text(face = "italic", size = (9)), legend.title = element_text(face = "bold", size = (11)), legend.text = element_text(face = "italic", size = (10)))
+> print(island_chart + island_charttheme + labs(title = "Penguin Species per Island", x = "Islands", y = "number of Penguins"))
+
+>#Create a boxplot showing body mass grouped by species.
+>#This chart uses the theme from the island chart above.
+> species_v_bodymass <- ggplot(data=penguins, aes(x=species, y=body_mass_g))+geom_boxplot(aes(color=species), width=0.3, show.legend = FALSE)+geom_jitter(aes(color=species), alpha = 0.5, show.legend = FALSE)
+> print(species_v_bodymass + island_charttheme + labs(title = "Species Vs. Body Mass", x = "Species", y = "Body Mass (g)")) 
+
+>#Create a bar graph displaying the number of penguins charted per year, fill bars by species.
+>#This chart uses the theme from the island chart.
+> year_charted <- ggplot(data=penguins, aes(x=year))+geom_bar(aes(fill = species))
+> print(year_charted + island_charttheme + labs(title = "Penguins Charted per Year", x = "Year", y = "Number of Penguins"))
+
+#Create a chart displaying how many penguins of each sex were documented from each species.
+#This chart uses the theme from the island chart.
+> sex_and_species <- ggplot(data=penguins, aes(x=sex))+geom_bar(aes(fill = sex))+facet_wrap(~species)
+> print(sex_and_species + island_charttheme + labs(title = "Penguins by Sex and Species", x = "Sex", y = "Number of Penguins"))
